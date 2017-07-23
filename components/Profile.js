@@ -2,15 +2,14 @@ import React, { Component } from 'react';
 import {AppRegistry, StyleSheet, Text, View} from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
-class Comp1 extends Component {
+export default class Profile extends Component {
 
   render() {
     return (
       <View>
         <Text>IM A COMPONENT</Text>
+        <Text>{this.props.navigation.state.params.userId}</Text>
       </View>
     );
   }
 }
-
-export default Comp1;

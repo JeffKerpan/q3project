@@ -12,20 +12,17 @@ export default class HomePage extends React.Component {
     super();
     this.state = {
       id: 0,
-      name: "Johnny Bravo",
-      amounts: [],
-      token: {},
       username: "",
       password: ""
     }
   }
 
   onSubmit = () => {
-    this.props.navigation.navigate('Main')
+    this.props.navigation.navigate('Main', { userId: this.state.id})
   }
 
   render() {
-    const { navigate } = this.props.navigation;
+    // const { navigate } = this.props.navigation;
     return (
 
       <View style={style.container}>
@@ -36,6 +33,10 @@ export default class HomePage extends React.Component {
         <Button
         onPress={this.onSubmit}
         title="Submit"
+        color="#841584"/>
+        <Button
+        onPress= { () => {this.props.navigation.navigate('SignUp')}}
+        title="Sign Up"
         color="#841584"/>
       </View>
 
