@@ -1,30 +1,32 @@
 import React, { Component } from 'react';
-import {TextInput, Button, AppRegistry, StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button} from 'react-native';
 import style from '../styles/stylecomp.js';
+import { StackNavigator } from 'react-navigation';
 
-class Loginform extends Component {
+
+export default class HomePage extends React.Component {
+
+  static navigationOptions = {title: 'Welcome'}
+
   constructor () {
     super();
     this.state = {
+      id: 0,
       username: "",
       password: ""
     }
   }
 
-onSubmit() {
-  try {
-    let response = fetch('https://localhost:8300/users/create');
-    return response
-  } catch (e) {
-    console.log("i am broken");
+  onSubmit = () => {
+    this.props.navigation.navigate('Main', { userId: this.state.id})
   }
-  console.log("i am a console log")
-}
 
   render() {
+    // const { navigate } = this.props.navigation;
     return (
 
-      <View>
+      <View style={style.container}>
+        <Text>DRINK WATER</Text>
         <TextInput value={this.state.username} style={style.form} onChangeText={(value) => this.setState({username: value})} placeholder="Username" />
         <TextInput value={this.state.password} style={style.form}
         onChangeText={(value) => this.setState({password: value})} placeholder="Password" secureTextEntry={true} />
@@ -32,10 +34,12 @@ onSubmit() {
         onPress={this.onSubmit}
         title="Submit"
         color="#841584"/>
+        <Button
+        onPress= { () => {this.props.navigation.navigate('SignUp')}}
+        title="Sign Up"
+        color="#841584"/>
       </View>
 
     );
   }
 }
-
-export default Loginform;

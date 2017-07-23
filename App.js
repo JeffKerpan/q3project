@@ -1,28 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Loginform from './components/loginform.js';
-import style from './styles/stylecomp.js';
+import { StackNavigator } from 'react-navigation';
+import HomePage from './components/Homepage.js';
+import Profile from './components/Profile.js';
+import SignUp from './components/SignUp.js';
 
-export default class App extends React.Component {
+const App = StackNavigator({
+  Home: { screen: HomePage },
+  Main: { screen: Profile },
+  SignUp: { screen: SignUp }
+})
 
-  constructor () {
-    super();
-    this.state = {
-      id: 0,
-      name: "Johnny Bravo",
-      amounts: [],
-      token: {}
-    }
-  }
-
-  render() {
-    return (
-
-      <View style={style.container}>
-        <Text>DRINK WATER</Text>
-        <Loginform />
-      </View>
-
-    );
-  }
-}
+export default App;
