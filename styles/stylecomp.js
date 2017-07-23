@@ -7,4 +7,10 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  form: {
+    height:40,
+    width: 150,
+    borderColor: "grey",
+    borderWidth: 2
+  }
 })
