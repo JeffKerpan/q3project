@@ -1,7 +1,8 @@
 ## Drink Water
 
-[ERD](https://erdplus.com/#/edit-diagram/327795)
+[ERD](http://imgur.com/a/4bbz6)
 
-[WIREFRAMES](https://www.draw.io/#G0B1wIprzTy57ZS3hNeDNRcVVjcXM)
+[WIREFRAMES](http://imgur.com/a/FK65M)
+[WIREFRAMES](http://imgur.com/a/2Vi95)
 
 [API GIT REPO](https://github.com/wallytreats/q3projectAPI)
