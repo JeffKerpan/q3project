@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Image} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Image } from 'react-native';
 import style from '../styles/stylecomp.js';
 import { StackNavigator } from 'react-navigation';
-
 
 export default class HomePage extends React.Component {
 
@@ -17,7 +16,6 @@ export default class HomePage extends React.Component {
     }
     this.onSubmit = this.onSubmit.bind(this);
   }
-
 
   async onSubmit(){
     let response = await fetch('https://drink-water-api.herokuapp.com/users/login', {
