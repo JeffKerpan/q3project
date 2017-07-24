@@ -12,6 +12,7 @@ STORIES:
 WIREFRAME:
 [WIREFRAMES](http://imgur.com/a/FK65M)
 [WIREFRAMES](http://imgur.com/a/2Vi95)
+[WIREFRAMES](http://imgur.com/a/6PBTl)
 
 API REPO:
 [API GIT REPO](https://github.com/wallytreats/q3projectAPI)
