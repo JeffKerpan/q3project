@@ -9,6 +9,7 @@ export default StyleSheet.create({
   form: {
     height:40,
     width: 150,
+    padding: 10,
     borderColor: "grey",
     borderWidth: 2
   },

@@ -24,7 +24,7 @@ export default class HomePage extends React.Component {
   render() {
 
     return (
-      <Image source={require('../styles/resorces/drink-water-bg.png')} style={style.backGround}  resizeMode={Image.resizeMode.sretch}>
+      <Image source={require('../styles/resorces/drink-water-bg2.png')} style={style.backGround}  resizeMode={Image.resizeMode.sretch}>
         <View style={style.container}>
           <Text>DRINK WATER</Text>
           <TextInput value={this.state.username} style={style.form} onChangeText={(value) => this.setState({username: value})} placeholder="Username" />
