@@ -15,10 +15,37 @@ export default class HomePage extends React.Component {
       username: "",
       password: ""
     }
+    // this.setState = this.setState.bind(this);
   }
 
+  // stateSet = (value) => {
+  //   this.setState({this.state.id: value[0].id}, () => {
+  //     console.log(this.state);
+  //   });
+  // }
+
   onSubmit = () => {
-    this.props.navigation.navigate('Main', { userId: this.state.id})
+    fetch('https://drink-water-api.herokuapp.com/users/login', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: 'test@test.com',
+        password: 'test'
+      }),
+    }).then((response) => {
+      return response.json()
+    })
+      .then((response) => {
+        console.log(response[0].id);
+        // stateSet(response);
+         // this.setState({this.state.id: response[0].id}, () => {
+      //   console.log(this.state);
+      // });
+      // this.props.navigation.navigate('Main', { userId: this.state.id});
+    })
   }
 
   render() {
