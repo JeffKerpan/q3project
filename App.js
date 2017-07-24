@@ -5,7 +5,7 @@ import Profile from './components/Profile.js';
 import SignUp from './components/SignUp.js';
 
 const App = StackNavigator({
-  Home: { screen: HomePage },
+  Home: { screen: HomePage},
   Main: { screen: Profile },
   SignUp: { screen: SignUp }
 })
