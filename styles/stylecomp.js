@@ -17,5 +17,7 @@ export default StyleSheet.create({
     flex: 1,
     alignSelf: 'stretch',
     width: null,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 })
