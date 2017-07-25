@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { TextInput, ScrollView, AppRegistry, Button, StyleSheet, Text, View, TouchableHighlight, Image } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import style from '../styles/stylecomp.js';
 import WaterGlass from './WaterGlass.js';
 
 export default class Profile extends Component {
@@ -93,43 +94,45 @@ export default class Profile extends Component {
 
   render() {
     return (
-      <View style = {{flex: 1}}>
-        <View style = {{flex: 1, backgroundColor: "#9bf5f7", justifyContent: "space-around", alignItems: "center"}} >
-          <View style = {{flex: 1, marginTop: 60}}>
-            <Text>{this.state.newamount}</Text>
-          </View>
-          <View style = {{flex: 2, flexDirection: "row", justifyContent: "center"}}>
-            <View style = {{flex: 3, justifyContent: "center", alignItems: "center"}}>
-              <TouchableHighlight onPress={this.onSubmit}>
-                <Image source = {require ("../styles/resources/DRINKWATERlogoSmall.png")} />
-              </TouchableHighlight>
+      <Image source={require('../styles/resources/drink-water-bg2.png')} style={style.backGround}  resizeMode={Image.resizeMode.sretch}>
+        <View style = {{flex: 1}}>
+          <View style = {{flex: 1, justifyContent: "space-around", alignItems: "center"}}>
+            <View style = {{flex: 1, marginTop: 60}}>
+              <Text>{this.state.newamount}</Text>
             </View>
-            <View style = {{flex: 1}}>
-              <View style = {{flex: 1}}>
-                <TouchableHighlight onPress ={ this.addWater}>
-                  <View style = {{width: 40, height: 40, backgroundColor: "#ff3b00", alignItems: "center"}}>
-                    <Text style = {{color: 'white'}}>+</Text>
-                  </View>
+            <View style = {{flex: 2, flexDirection: "row", justifyContent: "center"}}>
+              <View style = {{flex: 3, justifyContent: "center", alignItems: "center"}}>
+                <TouchableHighlight onPress = {this.onSubmit}>
+                  <Image source = {require ("../styles/resources/DRINKWATERlogoSmall.png")} />
                 </TouchableHighlight>
               </View>
               <View style = {{flex: 1}}>
-                <TouchableHighlight onPress = {this.subWater}>
-                  <View style = {{width: 40, height: 40, backgroundColor: "#ff3b00", alignItems: "center"}}>
-                    <Text style = {{color: 'white'}}>-</Text>
-                  </View>
-                </TouchableHighlight>
+                <View style = {{flex: 1}}>
+                  <TouchableHighlight onPress = {this.addWater}>
+                    <View style = {{width: 40, height: 40, backgroundColor: "#ff3b00", alignItems: "center"}}>
+                      <Text style = {{color: 'white'}}>+</Text>
+                    </View>
+                  </TouchableHighlight>
+                </View>
+                <View style = {{flex: 1}}>
+                  <TouchableHighlight onPress = {this.subWater}>
+                    <View style = {{width: 40, height: 40, backgroundColor: "#ff3b00", alignItems: "center"}}>
+                      <Text style = {{color: 'white'}}>-</Text>
+                    </View>
+                  </TouchableHighlight>
+                </View>
               </View>
             </View>
           </View>
+          <View style = {{flex: 1, alignItems: "center", justifyContent: "space-around"}}>
+            <WaterGlass total = {this.state.dailyTotal}/>
+            <Button
+            onPress= { () => {this.props.navigation.navigate('Home')}}
+            title="Logout"
+            color="#841584" />
+          </View>
         </View>
-        <View style = {{flex: 1, backgroundColor: "#ca83f7", alignItems: "center", justifyContent: "space-around"}}>
-          <WaterGlass />
-          <Button
-          onPress= { () => {this.props.navigation.navigate('Home')}}
-          title="Logout"
-          color="#841584" />
-        </View>
-      </View>
+      </Image>
     );
   }
 }
