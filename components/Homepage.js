@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Image } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Image, TouchableHighlight } from 'react-native';
 import style from '../styles/stylecomp.js';
 import { StackNavigator } from 'react-navigation';
 
@@ -41,21 +41,28 @@ export default class HomePage extends React.Component {
     return (
       <Image source={require('../styles/resorces/drink-water-bg2.png')} style={style.backGround}  resizeMode={Image.resizeMode.sretch}>
         <View style={style.container}>
-          <Text>DRINK WATER</Text>
-          <TextInput value={this.state.username} style={style.form} onChangeText={(value) => this.setState({username: value})} placeholder="Username" />
-          <TextInput value={this.state.password} style={style.form}
-          onChangeText={(value) => this.setState({password: value})} placeholder="Password" secureTextEntry={true} />
-          <Button
-          onPress={this.onSubmit}
-          title="Submit"
-          color="#841584"/>
-          <Button
-          onPress= { () => {this.props.navigation.navigate('SignUp')}}
-          title="Sign Up"
-          color="#841584"/>
+          <Image source={require('../styles/resorces/DRINKWATERlogo.png')}></Image>
+          <View style={style.splashRow}>
+            <View>
+              <TextInput value={this.state.username} style={style.form} onChangeText={(value) => this.setState({username: value})} placeholder="Email" />
+              <TextInput value={this.state.password} style={style.form}
+              onChangeText={(value) => this.setState({password: value})} placeholder="Password" secureTextEntry={true} />
+            </View>
+            <View>
+              <TouchableHighlight onPress={this.onSubmit}>
+                <View style={style.buttonStyle}>
+                  <Text style={{color: 'white'}}>Submit</Text>
+                </View>
+              </TouchableHighlight>
+              <TouchableHighlight onPress={() => {this.props.navigation.navigate('SignUp')}}>
+                <View style={style.buttonStyle}>
+                  <Text style={{color: 'white'}}>Sign Up</Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+          </View>
         </View>
       </Image>
-
     );
   }
 }
