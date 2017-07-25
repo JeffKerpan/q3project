@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Image, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Image, TouchableHighlight, ScrollView } from 'react-native';
 import style from '../styles/stylecomp.js';
 import { StackNavigator } from 'react-navigation';
 
@@ -41,7 +41,7 @@ export default class HomePage extends React.Component {
     return (
       <Image source={require('../styles/resorces/drink-water-bg2.png')} style={style.backGround}  resizeMode={Image.resizeMode.sretch}>
         <View style={style.container}>
-          <Image source={require('../styles/resorces/DRINKWATERlogo.png')}></Image>
+          <Image source={require('../styles/resorces/DRINKWATERlogo.png')} style={{marginBottom: 30}}></Image>
           <View style={style.splashRow}>
             <View>
               <TextInput value={this.state.username} style={style.form} onChangeText={(value) => this.setState({username: value})} placeholder="Email" />

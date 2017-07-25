@@ -5,8 +5,8 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-around',
-    paddingTop: 60,
+    justifyContent: 'center',
+    paddingTop: 20,
     paddingBottom: 160
   },
   form: {
@@ -23,7 +23,8 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   splashRow:{
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginBottom: 65
   },
   buttonStyle:{
     width: 70,
@@ -37,5 +38,5 @@ export default StyleSheet.create({
     marginBottom: 4,
     marginLeft: 4
   }
-  
+
 })
