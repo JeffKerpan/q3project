@@ -8,7 +8,7 @@ export default class Profile extends Component {
   constructor () {
     super();
     this.state = {
-      id: 1,
+      id: 0,
       totalamount: [],
       dailyTotal: 0,
       total:0,
@@ -26,7 +26,7 @@ export default class Profile extends Component {
   async componentWillMount () {
     let userId = this.props.navigation.state.params.userId;
     let response = await
-    fetch(`https://drink-water-api.herokuapp.com/users/${this.state.id}`, {
+    fetch(`https://drink-water-api.herokuapp.com/users/${userId}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
