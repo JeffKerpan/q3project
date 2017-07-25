@@ -14,8 +14,8 @@ export default class WaterGlass extends React.Component {
 
   render () {
     return (
-      <View style = {{width: 60, height: 120, borderWidth: 3, borderColor: "gray"}}>
-        <View style = {{width: 60, height: 60, backgroundColor: "rgba(150, 190, 255, .7)"}}>
+      <View style = {{flex: 0, width: 60, height: 120, borderWidth: 3, borderColor: "gray", justifyContent: "flex-end"}}>
+        <View style = {{width: 54, height: 60, backgroundColor: "rgba(150, 190, 255, .7)"}}>
         </View>
       </View>
     )
