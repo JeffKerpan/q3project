@@ -8,9 +8,11 @@ export default class Profile extends Component {
     this.state = {
       id: 1,
       totalamount: [],
-      newamount: 20
+      newamount: 0
     }
     this.onSubmit = this.onSubmit.bind(this);
+    this.addWater = this.addWater.bind(this);
+    this.subWater = this.subWater.bind(this);
   }
 
   static navigationOptions = {header:null}
@@ -29,6 +31,18 @@ export default class Profile extends Component {
     this.setState({
       totalamount: jsonResponse,
     });
+  }
+
+  addWater () {
+    this.setState({newamount: this.state.newamount += 2})
+  }
+
+  subWater () {
+    if (this.state.newamount === 0) {
+      return;
+    } else {
+      this.setState({newamount: this.state.newamount -= 2})
+    }
   }
 
   async onSubmit () {
@@ -55,32 +69,42 @@ export default class Profile extends Component {
 
   render() {
     return (
-      <ScrollView>
-        <View>
-          <View>
+      <View style = {{flex: 1}}>
+        <View style = {{flex: 1, backgroundColor: "#9bf5f7", justifyContent: "space-around", alignItems: "center"}} >
+          <View style = {{flex: 1, marginTop: 60}}>
             <Text>{this.state.newamount}</Text>
           </View>
-          <View>
-            <View>
-              <Text>{this.props.navigation.state.params.userId}</Text>
+          <View style = {{flex: 2, flexDirection: "row", justifyContent: "center"}}>
+            <View style = {{flex: 3, justifyContent: "center", alignItems: "center"}}>
+              <TouchableHighlight onPress={this.onSubmit}>
+                <Image source = {require ("../styles/resources/DRINKWATERlogoSmall.png")} />
+              </TouchableHighlight>
             </View>
-            <View>
-              <Button onPress = {this.onSubmit}
-              title="button"
-              color="#841584"
-              />
+            <View style = {{flex: 1}}>
+              <View style = {{flex: 1}}>
+                <TouchableHighlight onPress ={ this.addWater}>
+                  <View style = {{width: 40, height: 40, backgroundColor: "#ff3b00", alignItems: "center"}}>
+                    <Text style = {{color: 'white'}}>+</Text>
+                  </View>
+                </TouchableHighlight>
+              </View>
+              <View style = {{flex: 1}}>
+                <TouchableHighlight onPress = {this.subWater}>
+                  <View style = {{width: 40, height: 40, backgroundColor: "#ff3b00", alignItems: "center"}}>
+                    <Text style = {{color: 'white'}}>-</Text>
+                  </View>
+                </TouchableHighlight>
+              </View>
             </View>
           </View>
         </View>
-        <View>
+        <View style = {{flex: 1, backgroundColor: "#ca83f7"}}>
           <Button
           onPress= { () => {this.props.navigation.navigate('Home')}}
           title="Logout"
-          color="#841584"/>
+          color="#841584" />
         </View>
-        <View>
-        </View>
-      </ScrollView>
+      </View>
     );
   }
 }
