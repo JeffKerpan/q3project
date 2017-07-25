@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextInput, ScrollView, AppRegistry, Button, StyleSheet, Text, View, TouchableHighlight, Image, Animated } from 'react-native';
+import { TextInput, ScrollView, AppRegistry, Button, StyleSheet, Text, View, TouchableHighlight, Image, NativeModules, LayoutAnimation, } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import WaterGlass from './WaterGlass.js';
 
@@ -9,9 +9,9 @@ export default class Profile extends Component {
     this.state = {
       id: 0,
       totalamount: [],
-      newamount: 0,
-      scale: 1,
-      AniScale : new Animated.Value(1)    
+      dailyTotal: 0,
+      newamount: 2,
+      scale: 1
     }
     this.onSubmit = this.onSubmit.bind(this);
     this.addWater = this.addWater.bind(this);
@@ -60,16 +60,9 @@ export default class Profile extends Component {
 
   addWater () {
     this.setState({newamount: this.state.newamount += 2}, ()=>{
-      this.setState({
-        scale: (this.state.newamount/4) * 1
-      }, ()=>{Animated.timing(this.state.aniScale,
-        {
-          toValue: (this.state.newamount/4) *1,
-          duration: 400
-        }).start();
-      });
-    })
-  }
+      this.setState({scale: (this.state.newamount/4) * 1})
+  })
+}
 
   subWater () {
     if (this.state.newamount === 2) {
@@ -116,9 +109,9 @@ export default class Profile extends Component {
           </View>
           <View style = {{flex: 3, flexDirection: "row", justifyContent: "center", alignItems: 'center'}}>
             <View style = {{flex: 3, justifyContent: "flex-start", alignItems: "center", marginLeft: 20, overflow: 'visible' }}>
-              <TouchableHighlight onPress={this.onSubmit} style={{overflow: 'visible', transform:[{scale: this.state.scale}]}}>
-                <Image source = {require ("../styles/resources/DRINKWATERlogoSmall.png")} style={ {margin:1}} />
-              </TouchableHighlight>
+                <TouchableHighlight onPress={this.onSubmit} style={{overflow: 'visible', transform:[{scale: this.state.scale}]}}>
+                  <Image source = {require ("../styles/resources/DRINKWATERlogoSmall.png")} style={ {margin:1}} />
+                </TouchableHighlight>
             </View>
             <View style = {{flex: 1, justifyContent:'center', alignItems: 'center'}}>
               <View style = {{flex: 1}}>
@@ -139,7 +132,7 @@ export default class Profile extends Component {
           </View>
         </View>
         <View style = {{flex: 1, backgroundColor: "#ca83f7", alignItems: "center", justifyContent: "space-around"}}>
-          <WaterGlass />
+          <WaterGlass  />
           <Button
           onPress= { () => {this.props.navigation.navigate('Home')}}
           title="Logout"
