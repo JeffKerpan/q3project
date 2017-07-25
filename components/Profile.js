@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { TextInput, ScrollView, AppRegistry, Button, StyleSheet, Text, View, TouchableHighlight, Image, NativeModules, LayoutAnimation, } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import style from '../styles/stylecomp.js';
 import WaterGlass from './WaterGlass.js';
 
 export default class Profile extends Component {
   constructor () {
     super();
     this.state = {
-      id: 0,
+      id: 1,
       totalamount: [],
       dailyTotal: 0,
+      total:0,
       newamount: 2,
       scale: 1
     }
@@ -22,6 +24,7 @@ export default class Profile extends Component {
   static navigationOptions = {header:null}
 
   async componentWillMount () {
+    let userId = this.props.navigation.state.params.userId;
     let response = await
     fetch(`https://drink-water-api.herokuapp.com/users/${this.state.id}`, {
       method: 'GET',
@@ -33,7 +36,8 @@ export default class Profile extends Component {
 
     let jsonResponse = await response.json()
     this.setState({
-      totalamount: jsonResponse,
+      id: userId,
+      totalamount: jsonResponse
     }, () => {
       this.totalWater(this.state.totalamount)
     });
@@ -100,8 +104,9 @@ export default class Profile extends Component {
 
   render() {
     return (
+    <Image source={require('../styles/resources/drink-water-bg2.png')} style={style.backGround}  resizeMode={Image.resizeMode.sretch}>
       <View style = {{flex: 1}}>
-        <View style = {{flex: 1, backgroundColor: "#9bf5f7", justifyContent: "space-around", alignItems: "center"}} >
+        <View style = {{flex: 1, justifyContent: "space-around", alignItems: "center"}} >
           <View style = {{flex: 1, marginTop: 60, justifyContent: "center", alignItems: 'center'}}>
             <View>
               <Text>{this.state.newamount} oz</Text>
@@ -130,15 +135,16 @@ export default class Profile extends Component {
               </View>
             </View>
           </View>
-        </View>
-        <View style = {{flex: 1, backgroundColor: "#ca83f7", alignItems: "center", justifyContent: "space-around"}}>
-          <WaterGlass  />
-          <Button
-          onPress= { () => {this.props.navigation.navigate('Home')}}
-          title="Logout"
-          color="#841584" />
+          <View style = {{flex: 1, alignItems: "center", justifyContent: "space-around"}}>
+            <WaterGlass total = {this.state.dailyTotal}/>
+            <Button
+            onPress= { () => {this.props.navigation.navigate('Home')}}
+            title="Logout"
+            color="#841584" />
+          </View>
         </View>
       </View>
+    </Image>
     );
   }
 }
