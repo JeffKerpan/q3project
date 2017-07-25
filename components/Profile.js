@@ -13,6 +13,8 @@ export default class Profile extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  static navigationOptions = {header:null}
+
   async componentDidMount () {
     let response = await
     fetch(`https://drink-water-api.herokuapp.com/users/${this.state.id}`, {
@@ -53,31 +55,31 @@ export default class Profile extends Component {
 
   render() {
     return (
-      <ScrollView> //Page Level Root
-        <View>//This start upper third flex 1
-          <View> //this is the counter flex 1
+      <ScrollView>
+        <View>
+          <View>
             <Text>{this.state.newamount}</Text>
-          </View>//this ends counter
-          <View>//This is dropper and counter flex 2 and flex row
-            <View>//this is the water drop flex 2
+          </View>
+          <View>
+            <View>
               <Text>{this.props.navigation.state.params.userId}</Text>
-            </View>//this ends water drop
-            <View>//this is the +/- flex 1 flex
+            </View>
+            <View>
               <Button onPress = {this.onSubmit}
               title="button"
               color="#841584"
               />
-            </View>//this ends +/-
-          </View>//this ends drop and counter
-        </View>//this ends upper third flex 1
-        <View>//this starts middle third flex 1
+            </View>
+          </View>
+        </View>
+        <View>
           <Button
           onPress= { () => {this.props.navigation.navigate('Home')}}
           title="Logout"
           color="#841584"/>
-        </View>//this ends middle third
-        <View>//this starts bottom third flex 1
-        </View>//this ends bottom third
+        </View>
+        <View>
+        </View>
       </ScrollView>
     );
   }
