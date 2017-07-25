@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextInput, ScrollView, AppRegistry, Button, StyleSheet, Text, View, TouchableHighlight, Image } from 'react-native';
+import { TextInput, ScrollView, AppRegistry, Button, StyleSheet, Text, View, TouchableHighlight, Image, NativeModules, LayoutAnimation, } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import style from '../styles/stylecomp.js';
 import WaterGlass from './WaterGlass.js';
@@ -10,8 +10,10 @@ export default class Profile extends Component {
     this.state = {
       id: 1,
       totalamount: [],
-      newamount: 0,
-      dailyTotal: 0
+      dailyTotal: 0,
+      total:0,
+      newamount: 2,
+      scale: 1
     }
     this.onSubmit = this.onSubmit.bind(this);
     this.addWater = this.addWater.bind(this);
@@ -21,7 +23,8 @@ export default class Profile extends Component {
 
   static navigationOptions = {header:null}
 
-  async componentDidMount () {
+  async componentWillMount () {
+    let userId = this.props.navigation.state.params.userId;
     let response = await
     fetch(`https://drink-water-api.herokuapp.com/users/${this.state.id}`, {
       method: 'GET',
@@ -33,7 +36,8 @@ export default class Profile extends Component {
 
     let jsonResponse = await response.json()
     this.setState({
-      totalamount: jsonResponse,
+      id: userId,
+      totalamount: jsonResponse
     }, () => {
       this.totalWater(this.state.totalamount)
     });
@@ -59,14 +63,20 @@ export default class Profile extends Component {
   }
 
   addWater () {
-    this.setState({newamount: this.state.newamount += 2})
-  }
+    this.setState({newamount: this.state.newamount += 2}, ()=>{
+      this.setState({scale: (this.state.newamount/4) * 1})
+  })
+}
 
   subWater () {
-    if (this.state.newamount === 0) {
+    if (this.state.newamount === 2) {
       return;
     } else {
-      this.setState({newamount: this.state.newamount -= 2})
+      this.setState({newamount: this.state.newamount -= 2}, ()=>{
+        this.setState({
+          scale: (this.state.newamount/4) * 1
+        });
+      })
     }
   }
 
@@ -94,33 +104,34 @@ export default class Profile extends Component {
 
   render() {
     return (
-      <Image source={require('../styles/resources/drink-water-bg2.png')} style={style.backGround}  resizeMode={Image.resizeMode.sretch}>
-        <View style = {{flex: 1}}>
-          <View style = {{flex: 1, justifyContent: "space-around", alignItems: "center"}}>
-            <View style = {{flex: 1, marginTop: 60}}>
-              <Text>{this.state.newamount}</Text>
+    <Image source={require('../styles/resources/drink-water-bg2.png')} style={style.backGround}  resizeMode={Image.resizeMode.sretch}>
+      <View style = {{flex: 1}}>
+        <View style = {{flex: 1, justifyContent: "space-around", alignItems: "center"}} >
+          <View style = {{flex: 1, marginTop: 60, justifyContent: "center", alignItems: 'center'}}>
+            <View>
+              <Text>{this.state.newamount} oz</Text>
             </View>
-            <View style = {{flex: 2, flexDirection: "row", justifyContent: "center"}}>
-              <View style = {{flex: 3, justifyContent: "center", alignItems: "center"}}>
-                <TouchableHighlight onPress = {this.onSubmit}>
-                  <Image source = {require ("../styles/resources/DRINKWATERlogoSmall.png")} />
+          </View>
+          <View style = {{flex: 3, flexDirection: "row", justifyContent: "center", alignItems: 'center'}}>
+            <View style = {{flex: 3, justifyContent: "flex-start", alignItems: "center", marginLeft: 20, overflow: 'visible' }}>
+                <TouchableHighlight onPress={this.onSubmit} style={{overflow: 'visible', transform:[{scale: this.state.scale}]}}>
+                  <Image source = {require ("../styles/resources/DRINKWATERlogoSmall.png")} style={ {margin:1}} />
+                </TouchableHighlight>
+            </View>
+            <View style = {{flex: 1, justifyContent:'center', alignItems: 'center'}}>
+              <View style = {{flex: 1}}>
+                <TouchableHighlight onPress ={this.addWater}>
+                  <View style = {{width: 40, height: 40, backgroundColor: "#ff3b00", alignItems: "center", justifyContent:'center'}}>
+                    <Text style = {{color: 'white'}}>+</Text>
+                  </View>
                 </TouchableHighlight>
               </View>
               <View style = {{flex: 1}}>
-                <View style = {{flex: 1}}>
-                  <TouchableHighlight onPress = {this.addWater}>
-                    <View style = {{width: 40, height: 40, backgroundColor: "#ff3b00", alignItems: "center"}}>
-                      <Text style = {{color: 'white'}}>+</Text>
-                    </View>
-                  </TouchableHighlight>
-                </View>
-                <View style = {{flex: 1}}>
-                  <TouchableHighlight onPress = {this.subWater}>
-                    <View style = {{width: 40, height: 40, backgroundColor: "#ff3b00", alignItems: "center"}}>
-                      <Text style = {{color: 'white'}}>-</Text>
-                    </View>
-                  </TouchableHighlight>
-                </View>
+                <TouchableHighlight onPress = {this.subWater}>
+                  <View style = {{width: 40, height: 40, backgroundColor: "#ff3b00", alignItems: "center", justifyContent:'center'}}>
+                    <Text style = {{color: 'white'}}>-</Text>
+                  </View>
+                </TouchableHighlight>
               </View>
             </View>
           </View>
@@ -132,7 +143,8 @@ export default class Profile extends Component {
             color="#841584" />
           </View>
         </View>
-      </Image>
+      </View>
+    </Image>
     );
   }
 }
