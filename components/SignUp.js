@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import {TextInput, AppRegistry, Button, StyleSheet, Text, View} from 'react-native';
+import { TextInput, AppRegistry, Button, StyleSheet, Text, View, TouchableHighlight, Image } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import style from '../styles/stylecomp.js';
 
 export default class SignUp extends Component {
+
+  static navigationOptions = {header:null}
 
   constructor () {
     super();
@@ -51,21 +53,24 @@ export default class SignUp extends Component {
 
   render() {
     return (
-      <View>
-        <Text>Sign Up Page</Text>
-        <TextInput value={this.state.firstname} style={style.form} onChangeText={(value) => this.setState({firstname: value})} placeholder="firstname" />
-        <TextInput value={this.state.lastname} style={style.form}
-      onChangeText={(value) => this.setState({lastname: value})}      placeholder="lastname" />
-        <TextInput value={this.state.email} style={style.form} onChangeText={(value) => this.setState({email: value})} placeholder="email" />
-        <TextInput value={this.state.password} style={style.form}
-      onChangeText={(value) => this.setState({password: value})} placeholder="password" secureTextEntry={true} />
-        <TextInput value={this.state.phone} style={style.form}
-      onChangeText={(value) => this.setState({phone: value})} placeholder="phone" />
-        <Button
-      onPress={this.onSubmit}
-      title="Submit"
-      color="#841584"/>
-      </View>
+      <Image source={require('../styles/resorces/drink-water-bg2.png')} style={style.backGround}  resizeMode={Image.resizeMode.sretch}>
+        <View>
+          <Text>Sign Up Page</Text>
+          <TextInput value={this.state.firstname} style={style.form} onChangeText={(value) => this.setState({firstname: value})} placeholder="firstname" />
+          <TextInput value={this.state.lastname} style={style.form}
+          onChangeText={(value) => this.setState({lastname: value})}      placeholder="lastname" />
+          <TextInput value={this.state.email} style={style.form} onChangeText={(value) => this.setState({email: value})} placeholder="email" />
+          <TextInput value={this.state.password} style={style.form}
+          onChangeText={(value) => this.setState({password: value})} placeholder="password" secureTextEntry={true} />
+          <TextInput value={this.state.phone} style={style.form}
+          onChangeText={(value) => this.setState({phone: value})} placeholder="phone" />
+          <TouchableHighlight onPress={this.onSubmit}>
+            <View style={style.buttonStyle}>
+              <Text style={{color: 'white'}}>Submit</Text>
+            </View>
+          </TouchableHighlight>
+        </View>
+      </Image>
     );
   }
 }

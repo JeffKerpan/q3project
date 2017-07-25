@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, View, Button } from 'react-native';
+import { TextInput, ScrollView, AppRegistry, Button, StyleSheet, Text, View, TouchableHighlight, Image } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
 export default class Profile extends Component {
@@ -12,6 +12,8 @@ export default class Profile extends Component {
     }
     this.onSubmit = this.onSubmit.bind(this);
   }
+
+  static navigationOptions = {header:null}
 
   async componentDidMount () {
     let response = await
@@ -53,18 +55,32 @@ export default class Profile extends Component {
 
   render() {
     return (
-      <View>
-        <Text>IM A COMPONENT</Text>
-        <Text>{this.props.navigation.state.params.userId}</Text>
-        <Button onPress = {this.onSubmit}
-        title="button"
-        color="#841584"
-        />
-        <Button
-        onPress= { () => {this.props.navigation.navigate('Home')}}
-        title="Logout"
-        color="#841584"/>
-      </View>
+      <ScrollView>
+        <View>
+          <View>
+            <Text>{this.state.newamount}</Text>
+          </View>
+          <View>
+            <View>
+              <Text>{this.props.navigation.state.params.userId}</Text>
+            </View>
+            <View>
+              <Button onPress = {this.onSubmit}
+              title="button"
+              color="#841584"
+              />
+            </View>
+          </View>
+        </View>
+        <View>
+          <Button
+          onPress= { () => {this.props.navigation.navigate('Home')}}
+          title="Logout"
+          color="#841584"/>
+        </View>
+        <View>
+        </View>
+      </ScrollView>
     );
   }
 }
