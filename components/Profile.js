@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { TextInput, ScrollView, AppRegistry, Button, StyleSheet, Text, View, TouchableHighlight, Image, Animated } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import WaterGlass from './WaterGlass.js';
 
 export default class Profile extends Component {
   constructor () {
@@ -8,13 +9,14 @@ export default class Profile extends Component {
     this.state = {
       id: 0,
       totalamount: [],
-      newamount: 2,
+      newamount: 0,
       scale: 1,
-      AniScale : new Animated.Value(1),
+      AniScale : new Animated.Value(1)    
     }
     this.onSubmit = this.onSubmit.bind(this);
     this.addWater = this.addWater.bind(this);
     this.subWater = this.subWater.bind(this);
+    this.totalWater = this.totalWater.bind(this);
   }
 
   static navigationOptions = {header:null}
@@ -32,8 +34,28 @@ export default class Profile extends Component {
     let jsonResponse = await response.json()
     this.setState({
       totalamount: jsonResponse,
-      scale: (this.state.newamount/4) * 1
+    }, () => {
+      this.totalWater(this.state.totalamount)
     });
+  }
+
+  totalWater (array) {
+    let today = new Date;
+    let dailyTotal = [];
+    let total = 0;
+    array.forEach((element) => {
+      let timeIndex = element.created_at.indexOf('T');
+      let firstDate = element.created_at.substring(timeIndex - 2, timeIndex);
+      let secondDate = today.getDate();
+
+      if (parseInt(firstDate) === secondDate) {
+        dailyTotal.push(element.amount);
+      }
+    })
+    dailyTotal.forEach((element) => {
+      total += parseInt(element);
+    })
+    this.setState({dailyTotal: total});
   }
 
   addWater () {
@@ -78,6 +100,8 @@ export default class Profile extends Component {
     this.setState({
       totalamount: jsonResponse,
       newamount: 0
+    }, () => {
+      this.totalWater(this.state.totalamount);
     });
   }
 
@@ -114,7 +138,8 @@ export default class Profile extends Component {
             </View>
           </View>
         </View>
-        <View style = {{flex: 1, backgroundColor: "#ca83f7"}}>
+        <View style = {{flex: 1, backgroundColor: "#ca83f7", alignItems: "center", justifyContent: "space-around"}}>
+          <WaterGlass />
           <Button
           onPress= { () => {this.props.navigation.navigate('Home')}}
           title="Logout"
