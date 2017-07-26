@@ -58,7 +58,6 @@ export default class Profile extends Component {
 
   totalWater (array) {
     let today = new Date;
-    console.log(today);
     let dailyTotal = [];
     let total = 0;
     array.forEach((element) => {
@@ -106,7 +105,6 @@ export default class Profile extends Component {
       }),
     })
     let jsonResponse = await response.json()
-    console.log(jsonResponse);
     this.setState({
       totalamount: jsonResponse,
       newamount: 2
