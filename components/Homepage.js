@@ -77,7 +77,7 @@ export default class HomePage extends React.Component {
               </TouchableHighlight>
             </View>
           </View>
-          <View>
+          <View style = {{backgroundColor: "transparent"}}>
             <Text style={{color: 'white' , fontFamily: 'Oswald-SemiBold', fontSize: 45, marginTop: 5 }}>DRINK WATER</Text>
           </View>
         </View>

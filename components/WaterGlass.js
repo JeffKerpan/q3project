@@ -27,7 +27,7 @@ export default class WaterGlass extends React.Component {
     return (
       <View>
         <View style = {{flex: 0, width: 60, height: 120, borderWidth: 3, borderColor: "gray", justifyContent: "flex-end"}}>
-        <Text>{this.props.total}</Text>
+        <Text style = {{backgroundColor: "transparent"}}>{this.props.total}</Text>
           <View style = {{width: 54, height: 60, backgroundColor: "rgba(150, 190, 255, .7)"}}>
           </View>
         </View>

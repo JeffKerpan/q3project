@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { TextInput, AppRegistry, Button, StyleSheet, Text, View, TouchableHighlight, Image } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import style from '../styles/stylecomp.js';
+import { Font } from 'expo';
 
 export default class SignUp extends Component {
 
@@ -65,7 +66,7 @@ export default class SignUp extends Component {
   render() {
     return (
       <Image source={require('../styles/resources/drink-water-bg2.png')} style={style.backGround}  resizeMode={Image.resizeMode.sretch}>
-        <View>
+        <View style = {{backgroundColor: "transparent"}}>
           <Text>Sign Up Page</Text>
           <TextInput value={this.state.firstname} style={style.form} onChangeText={(value) => this.setState({firstname: value})} placeholder="firstname" />
           <TextInput value={this.state.lastname} style={style.form}
