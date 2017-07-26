@@ -20,6 +20,17 @@ export default class SignUp extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  async componentDidMount() {
+    await Font.loadAsync({
+      'Oswald-Bold': require('../Assets/Fonts/Oswald-Bold.ttf'),
+      'Oswald-Medium': require('../Assets/Fonts/Oswald-Medium.ttf'),
+      'Oswald-Regular': require('../Assets/Fonts/Oswald-Regular.ttf'),
+      'Oswald-SemiBold': require('../Assets/Fonts/Oswald-SemiBold.ttf'),
+      'SourceSansPro-Light': require('../Assets/Fonts/SourceSansPro-Light.ttf'),
+      'SourceSansPro-Regular': require('../Assets/Fonts/SourceSansPro-Regular.ttf')
+    });
+  }
+
   async onSubmit () {
     let response = await
     fetch('https://drink-water-api.herokuapp.com/users/create', {
