@@ -17,7 +17,7 @@ export default class Profile extends Component {
       scale: 1,
       fontLoaded: false,
     }
-    this.scaleValue = new Animated.Value(.4)
+    this.scaleValue = new Animated.Value(.5)
     this.onSubmit = this.onSubmit.bind(this);
     this.addWater = this.addWater.bind(this);
     this.subWater = this.subWater.bind(this);
@@ -147,18 +147,18 @@ export default class Profile extends Component {
           <View style = {{flex: 1, flexDirection: 'row', marginTop: 50, justifyContent: "space-around", alignItems: 'center'}}>
             <View style = {{flex: 1, alignItems: "center", justifyContent:'flex-end'}}>
               <TouchableHighlight onPress = {this.subWater}>
-                <View style = {{width: 40, height: 40, backgroundColor: "#ff3b00", alignItems: "center", justifyContent:'center', borderRadius: 100}}>
-                  <Text style = {{color: 'white', fontSize: 40}}>-</Text>
+                <View style = {{width: 55, height: 55, backgroundColor: "#B9E3C6", alignItems: "center", justifyContent:'center', borderRadius: 100}}>
+                  <Text style = {{color: 'white', fontSize: 40, marginBottom: 5}}>-</Text>
                 </View>
               </TouchableHighlight>
             </View>
             <View style ={{flex: 1, alignItems: "center", justifyContent:'center', backgroundColor: "transparent"}}>
-              <Text>{this.state.newamount} oz</Text>
+              <Text style={{fontFamily: 'SourceSansPro-Regular', fontSize: 30}}>{this.state.newamount} oz</Text>
             </View>
             <View style = {{flex: 1, alignItems: "center", justifyContent:'flex-start'}}>
               <TouchableHighlight onPress = {this.addWater}>
-                <View style = {{width: 40, height: 40, backgroundColor: "#ff3b00", alignItems: "center", justifyContent:'center', borderRadius: 100}}>
-                  <Text style = {{color: 'white', fontSize: 30}}>+</Text>
+                <View style = {{width: 55, height: 55, backgroundColor: "#1FE4AD", alignItems: "center", justifyContent:'center', borderRadius: 100}}>
+                  <Text style = {{color: 'white', fontSize: 30, marginBottom: 5}}>+</Text>
                 </View>
               </TouchableHighlight>
             </View>
