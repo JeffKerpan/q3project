@@ -19,7 +19,7 @@
     "preset": "jest-expo"
   },
   "rnpm": {
-    "assets": ["Assets/Fonts"]
+    "assets": ["./Assets/Fonts"]
   },
   "dependencies": {
     "expo": "^18.0.3",

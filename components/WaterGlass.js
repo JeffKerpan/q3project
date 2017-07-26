@@ -1,15 +1,26 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Image, TouchableHighlight, ScrollView } from 'react-native';
 import style from '../styles/stylecomp.js';
+import { Font } from 'expo';
 
 export default class WaterGlass extends React.Component {
-
   constructor () {
     super();
     this.state = {
       width: 50,
       height: 50
     }
+  }
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      'Oswald-Bold': require('../Assets/Fonts/Oswald-Bold.ttf'),
+      'Oswald-Medium': require('../Assets/Fonts/Oswald-Medium.ttf'),
+      'Oswald-Regular': require('../Assets/Fonts/Oswald-Regular.ttf'),
+      'Oswald-SemiBold': require('../Assets/Fonts/Oswald-SemiBold.ttf'),
+      'SourceSansPro-Light': require('../Assets/Fonts/SourceSansPro-Light.ttf'),
+      'SourceSansPro-Regular': require('../Assets/Fonts/SourceSansPro-Regular.ttf')
+    });
   }
 
   render () {
