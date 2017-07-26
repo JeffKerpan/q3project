@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextInput, ScrollView, AppRegistry, Button, StyleSheet, Text, View, TouchableHighlight, Image, NativeModules, LayoutAnimation, } from 'react-native';
+import { TextInput, ScrollView, AppRegistry, Button, StyleSheet, Text, View, TouchableHighlight, Image, NativeModules, Animated, Easing } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import style from '../styles/stylecomp.js';
 import WaterGlass from './WaterGlass.js';
@@ -15,10 +15,12 @@ export default class Profile extends Component {
       newamount: 2,
       scale: 1
     }
+    this.scaleValue = new Animated.Value(.4)
     this.onSubmit = this.onSubmit.bind(this);
     this.addWater = this.addWater.bind(this);
     this.subWater = this.subWater.bind(this);
     this.totalWater = this.totalWater.bind(this);
+    this.scale = this.scale.bind(this);
   }
 
   static navigationOptions = {header:null}
@@ -43,6 +45,17 @@ export default class Profile extends Component {
     });
   }
 
+  scale () {
+    Animated.timing(
+      this.scaleValue,
+      {
+        toValue: Math.sqrt(this.state.newamount - this.state.newamount/1.2),
+        duration: 300,
+        easing: Easing.bounce
+      }
+    ).start()
+  }
+
   totalWater (array) {
     let today = new Date;
     let dailyTotal = [];
@@ -50,8 +63,7 @@ export default class Profile extends Component {
     array.forEach((element) => {
       let timeIndex = element.created_at.indexOf('T');
       let firstDate = element.created_at.substring(timeIndex - 2, timeIndex);
-      let secondDate = today.getDate();
-
+      let secondDate = today.getUTCDate();
       if (parseInt(firstDate) === secondDate) {
         dailyTotal.push(element.amount);
       }
@@ -64,25 +76,25 @@ export default class Profile extends Component {
 
   addWater () {
     this.setState({newamount: this.state.newamount += 2}, ()=>{
+      this.scale();
       this.setState({scale: (this.state.newamount/4) * 1})
-  })
-}
+    })
+  }
 
   subWater () {
     if (this.state.newamount === 2) {
       return;
-    } else {
-      this.setState({newamount: this.state.newamount -= 2}, ()=>{
-        this.setState({
-          scale: (this.state.newamount/4) * 1
-        });
-      })
     }
+    this.setState({newamount: this.state.newamount -= 2}, ()=>{
+      this.scale();
+      this.setState({scale: (this.state.newamount/4) * 1 });
+    })
   }
 
   async onSubmit () {
+    let userId = this.props.navigation.state.params.userId;
     let response = await
-    fetch(`https://drink-water-api.herokuapp.com/users/${this.state.id}`, {
+    fetch(`https://drink-water-api.herokuapp.com/users/${userId}`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -92,49 +104,51 @@ export default class Profile extends Component {
         amount: this.state.newamount
       }),
     })
-
     let jsonResponse = await response.json()
     this.setState({
       totalamount: jsonResponse,
-      newamount: 0
+      newamount: 2
     }, () => {
+      this.scale();
       this.totalWater(this.state.totalamount);
     });
   }
 
+
   render() {
     return (
-    <Image source={require('../styles/resources/drink-water-bg2.png')} style={style.backGround}  resizeMode={Image.resizeMode.sretch}>
       <View style = {{flex: 1}}>
-        <View style = {{flex: 1, justifyContent: "space-around", alignItems: "center"}} >
-          <View style = {{flex: 1, marginTop: 60, justifyContent: "center", alignItems: 'center'}}>
-            <View>
+        <Image source={require('../styles/resources/drink-water-bg2.png')} style={{flex: 1, alignSelf: 'stretch',width: null}}  resizeMode={Image.resizeMode.sretch}>
+          <View style = {{flex: 1, flexDirection: 'row', marginTop: 50, justifyContent: "space-around", alignItems: 'center'}}>
+            <View style = {{flex: 1, alignItems: "center", justifyContent:'center'}}>
+              <TouchableHighlight onPress ={this.addWater}>
+                <View style = {{width: 40, height: 40, backgroundColor: "#ff3b00", alignItems: "center", justifyContent:'center'}}>
+                  <Text style = {{color: 'white'}}>+</Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+            <View style ={{flex: 1, alignItems: "center", justifyContent:'center'}}>
               <Text>{this.state.newamount} oz</Text>
+            </View>
+            <View style = {{flex: 1, alignItems: "center", justifyContent:'center'}}>
+              <TouchableHighlight onPress = {this.subWater}>
+                <View style = {{width: 40, height: 40, backgroundColor: "#ff3b00", alignItems: "center", justifyContent:'center'}}>
+                  <Text style = {{color: 'white'}}>-</Text>
+                </View>
+              </TouchableHighlight>
             </View>
           </View>
           <View style = {{flex: 3, flexDirection: "row", justifyContent: "center", alignItems: 'center'}}>
-            <View style = {{flex: 3, justifyContent: "flex-start", alignItems: "center", marginLeft: 20, overflow: 'visible' }}>
-                <TouchableHighlight onPress={this.onSubmit} style={{overflow: 'visible', transform:[{scale: this.state.scale}]}}>
+            <View style = {{flex: 3, justifyContent: "flex-start", alignItems: "center", overflow: 'visible' }}>
+              <Animated.View style={{transform:[{scale: this.scaleValue}]}}>
+                <TouchableHighlight onPress={this.onSubmit} style={{overflow: 'visible',flex: 1, alignItems: "center", justifyContent:'center'}}>
                   <Image source = {require ("../styles/resources/DRINKWATERlogoSmall.png")} style={ {margin:1}} />
                 </TouchableHighlight>
-            </View>
-            <View style = {{flex: 1, justifyContent:'center', alignItems: 'center'}}>
-              <View style = {{flex: 1}}>
-                <TouchableHighlight onPress ={this.addWater}>
-                  <View style = {{width: 40, height: 40, backgroundColor: "#ff3b00", alignItems: "center", justifyContent:'center'}}>
-                    <Text style = {{color: 'white'}}>+</Text>
-                  </View>
-                </TouchableHighlight>
-              </View>
-              <View style = {{flex: 1}}>
-                <TouchableHighlight onPress = {this.subWater}>
-                  <View style = {{width: 40, height: 40, backgroundColor: "#ff3b00", alignItems: "center", justifyContent:'center'}}>
-                    <Text style = {{color: 'white'}}>-</Text>
-                  </View>
-                </TouchableHighlight>
-              </View>
+              </Animated.View>
             </View>
           </View>
+        </Image>
+        <Image source={require('../styles/resources/drink-water-bg2.png')} style={{flex: 1, alignSelf: 'stretch',width: null}}>
           <View style = {{flex: 1, alignItems: "center", justifyContent: "space-around"}}>
             <WaterGlass total = {this.state.dailyTotal}/>
             <Button
@@ -142,9 +156,8 @@ export default class Profile extends Component {
             title="Logout"
             color="#841584" />
           </View>
-        </View>
+        </Image>
       </View>
-    </Image>
     );
   }
 }
