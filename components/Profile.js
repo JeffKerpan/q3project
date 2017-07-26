@@ -58,13 +58,13 @@ export default class Profile extends Component {
 
   totalWater (array) {
     let today = new Date;
+    console.log(today);
     let dailyTotal = [];
     let total = 0;
     array.forEach((element) => {
       let timeIndex = element.created_at.indexOf('T');
       let firstDate = element.created_at.substring(timeIndex - 2, timeIndex);
-      let secondDate = today.getDate();
-
+      let secondDate = today.getUTCDate();
       if (parseInt(firstDate) === secondDate) {
         dailyTotal.push(element.amount);
       }
@@ -93,8 +93,9 @@ export default class Profile extends Component {
   }
 
   async onSubmit () {
+    let userId = this.props.navigation.state.params.userId;
     let response = await
-    fetch(`https://drink-water-api.herokuapp.com/users/${this.state.id}`, {
+    fetch(`https://drink-water-api.herokuapp.com/users/${userId}`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -104,8 +105,8 @@ export default class Profile extends Component {
         amount: this.state.newamount
       }),
     })
-
     let jsonResponse = await response.json()
+    console.log(jsonResponse);
     this.setState({
       totalamount: jsonResponse,
       newamount: 2
