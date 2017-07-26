@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextInput, ScrollView, AppRegistry, Button, StyleSheet, Text, View, TouchableHighlight, Image, NativeModules, Animated, Easing } from 'react-native';
+import { TextInput, ScrollView, AppRegistry, Button, StyleSheet, Text, View, TouchableHighlight, Image, NativeModules, Animated, Easing, AsyncStorage } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import style from '../styles/stylecomp.js';
 import WaterGlass from './WaterGlass.js';
@@ -23,6 +23,7 @@ export default class Profile extends Component {
     this.subWater = this.subWater.bind(this);
     this.totalWater = this.totalWater.bind(this);
     this.scale = this.scale.bind(this);
+    this.onLogout = this.onLogout.bind(this);
   }
 
   static navigationOptions = {header:null}
@@ -68,6 +69,16 @@ export default class Profile extends Component {
         easing: Easing.bounce
       }
     ).start()
+  }
+
+  async onLogout (){
+    try {
+      await AsyncStorage.removeItem('@UserId:key');
+      this.props.navigation.navigate('Home')
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
   totalWater (array) {
@@ -132,22 +143,22 @@ export default class Profile extends Component {
   render() {
     return (
       <View style = {{flex: 1}}>
-        <Image source={require('../styles/resources/drink-water-bg2.png')} style={{flex: 1, alignSelf: 'stretch',width: null}}  resizeMode = {Image.resizeMode.sretch}>
+        <View style={{flex: 1, alignSelf: 'stretch',width: null}}>
           <View style = {{flex: 1, flexDirection: 'row', marginTop: 50, justifyContent: "space-around", alignItems: 'center'}}>
-            <View style = {{flex: 1, alignItems: "center", justifyContent:'center'}}>
-              <TouchableHighlight onPress = {this.addWater}>
-                <View style = {{width: 40, height: 40, backgroundColor: "#ff3b00", alignItems: "center", justifyContent:'center'}}>
-                  <Text style = {{color: 'white'}}>+</Text>
+            <View style = {{flex: 1, alignItems: "center", justifyContent:'flex-end'}}>
+              <TouchableHighlight onPress = {this.subWater}>
+                <View style = {{width: 40, height: 40, backgroundColor: "#ff3b00", alignItems: "center", justifyContent:'center', borderRadius: 100}}>
+                  <Text style = {{color: 'white', fontSize: 40}}>-</Text>
                 </View>
               </TouchableHighlight>
             </View>
             <View style ={{flex: 1, alignItems: "center", justifyContent:'center', backgroundColor: "transparent"}}>
               <Text>{this.state.newamount} oz</Text>
             </View>
-            <View style = {{flex: 1, alignItems: "center", justifyContent:'center'}}>
-              <TouchableHighlight onPress = {this.subWater}>
-                <View style = {{width: 40, height: 40, backgroundColor: "#ff3b00", alignItems: "center", justifyContent:'center'}}>
-                  <Text style = {{color: 'white'}}>-</Text>
+            <View style = {{flex: 1, alignItems: "center", justifyContent:'flex-start'}}>
+              <TouchableHighlight onPress = {this.addWater}>
+                <View style = {{width: 40, height: 40, backgroundColor: "#ff3b00", alignItems: "center", justifyContent:'center', borderRadius: 100}}>
+                  <Text style = {{color: 'white', fontSize: 30}}>+</Text>
                 </View>
               </TouchableHighlight>
             </View>
@@ -161,12 +172,12 @@ export default class Profile extends Component {
               </Animated.View>
             </View>
           </View>
-        </Image>
+        </View>
         <Image source={require('../styles/resources/drink-water-bg2.png')} style={{flex: 1, alignSelf: 'stretch',width: null}}>
           <View style = {{flex: 1, alignItems: "center", justifyContent: "space-around"}}>
             <WaterGlass total = {this.state.dailyTotal} />
             <Button
-            onPress= { () => {this.props.navigation.navigate('Home')}}
+            onPress= {this.onLogout}
             title="Logout"
             color="#841584" />
           </View>

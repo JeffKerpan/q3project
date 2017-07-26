@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextInput, AppRegistry, Button, StyleSheet, Text, View, TouchableHighlight, Image } from 'react-native';
+import { TextInput, AppRegistry, Button, StyleSheet, Text, View, TouchableHighlight, Image, AsyncStorage } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import style from '../styles/stylecomp.js';
 import { Font } from 'expo';
@@ -57,9 +57,14 @@ export default class SignUp extends Component {
       email: "",
       password: "",
       phone: ""
-    }, () => {
+    }, async () => {
+      let userId = this.state.id.toString()
+      try {
+        await AsyncStorage.setItem('@UserId:key', userId);
+      } catch (error) {
+        console.log(error);
+      }
       this.props.navigation.navigate('Main', { userId: this.state.id})
-      console.log(this.state);
     });
   }
 

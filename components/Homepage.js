@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Image, TouchableHighlight, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Image, TouchableHighlight, ScrollView, AsyncStorage } from 'react-native';
 import style from '../styles/stylecomp.js';
 import { StackNavigator } from 'react-navigation';
 import { Font } from 'expo';
@@ -12,7 +12,7 @@ export default class HomePage extends React.Component {
     super();
     this.state = {
       id: 0,
-      username: "",
+      email: "",
       password: "",
       fontLoaded: false,
     }
@@ -28,11 +28,23 @@ export default class HomePage extends React.Component {
       'SourceSansPro-Light': require('../Assets/Fonts/SourceSansPro-Light.ttf'),
       'SourceSansPro-Regular': require('../Assets/Fonts/SourceSansPro-Regular.ttf')
     });
-    this.setState({ fontLoaded: true })
+    this.setState({ fontLoaded: true }, async ()=>{
+      try {
+        const value = await AsyncStorage.getItem('@UserId:key');
+        if (value !== null){
+          let userID = parseInt(value);
+          console.log(value, "ASYNC STORAGE");
+          this.props.navigation.navigate('Main', { userId: userID })
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })
   }
 
 
   async onSubmit(){
+    console.log(this.state);
     let response = await fetch('https://drink-water-api.herokuapp.com/users/login', {
       method: 'POST',
       headers: {
@@ -40,13 +52,19 @@ export default class HomePage extends React.Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email: 'test@test.com',
-        password: 'test'
+        email: this.state.email,
+        password: this.state.password
       }),
     })
-
+    console.log(response);
     let jsonResponse = await response.json()
-    this.setState({id:jsonResponse[0].id}, ()=>{
+    this.setState({id:jsonResponse[0].id}, async ()=>{
+      let userId = this.state.id.toString()
+      try {
+        await AsyncStorage.setItem('@UserId:key', userId);
+      } catch (error) {
+        console.log(error);
+      }
       this.props.navigation.navigate('Main', { userId: this.state.id})
     });
   }
@@ -60,9 +78,9 @@ export default class HomePage extends React.Component {
           <Image source={require('../styles/resources/DRINKWATERlogo.png')} style={{marginBottom: 30}}></Image>
           <View style={style.splashRow}>
             <View>
-              <TextInput value={this.state.username} style={style.form} onChangeText={(value) => this.setState({username: value})} placeholder="Email" />
+              <TextInput value={this.state.email} style={style.form} onChangeText={(value) => this.setState({email: value.trim()})} placeholder="Email" />
               <TextInput value={this.state.password} style={style.form}
-              onChangeText={(value) => this.setState({password: value})} placeholder="Password" secureTextEntry={true} />
+              onChangeText={(value) => this.setState({password: value.trim()})} placeholder="Password" secureTextEntry={true} />
             </View>
             <View>
               <TouchableHighlight onPress={this.onSubmit}>
