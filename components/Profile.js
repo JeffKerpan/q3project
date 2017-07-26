@@ -132,16 +132,16 @@ export default class Profile extends Component {
   render() {
     return (
       <View style = {{flex: 1}}>
-        <Image source={require('../styles/resources/drink-water-bg2.png')} style={{flex: 1, alignSelf: 'stretch',width: null}}  resizeMode={Image.resizeMode.sretch}>
+        <Image source={require('../styles/resources/drink-water-bg2.png')} style={{flex: 1, alignSelf: 'stretch',width: null}}  resizeMode = {Image.resizeMode.sretch}>
           <View style = {{flex: 1, flexDirection: 'row', marginTop: 50, justifyContent: "space-around", alignItems: 'center'}}>
             <View style = {{flex: 1, alignItems: "center", justifyContent:'center'}}>
-              <TouchableHighlight onPress ={this.addWater}>
+              <TouchableHighlight onPress = {this.addWater}>
                 <View style = {{width: 40, height: 40, backgroundColor: "#ff3b00", alignItems: "center", justifyContent:'center'}}>
                   <Text style = {{color: 'white'}}>+</Text>
                 </View>
               </TouchableHighlight>
             </View>
-            <View style ={{flex: 1, alignItems: "center", justifyContent:'center'}}>
+            <View style ={{flex: 1, alignItems: "center", justifyContent:'center', backgroundColor: "transparent"}}>
               <Text>{this.state.newamount} oz</Text>
             </View>
             <View style = {{flex: 1, alignItems: "center", justifyContent:'center'}}>
@@ -154,8 +154,8 @@ export default class Profile extends Component {
           </View>
           <View style = {{flex: 3, flexDirection: "row", justifyContent: "center", alignItems: 'center'}}>
             <View style = {{flex: 3, justifyContent: "flex-start", alignItems: "center", overflow: 'visible' }}>
-              <Animated.View style={{transform:[{scale: this.scaleValue}]}}>
-                <TouchableHighlight onPress={this.onSubmit} style={{overflow: 'visible',flex: 1, alignItems: "center", justifyContent:'center'}}>
+              <Animated.View style = {{transform:[{scale: this.scaleValue}]}}>
+                <TouchableHighlight onPress = {this.onSubmit} style={{overflow: 'visible',flex: 1, alignItems: "center", justifyContent:'center'}}>
                   <Image source = {require ("../styles/resources/DRINKWATERlogoSmall.png")} style={ {margin:1}} />
                 </TouchableHighlight>
               </Animated.View>
@@ -164,7 +164,7 @@ export default class Profile extends Component {
         </Image>
         <Image source={require('../styles/resources/drink-water-bg2.png')} style={{flex: 1, alignSelf: 'stretch',width: null}}>
           <View style = {{flex: 1, alignItems: "center", justifyContent: "space-around"}}>
-            <WaterGlass total = {this.state.dailyTotal}/>
+            <WaterGlass total = {this.state.dailyTotal} />
             <Button
             onPress= { () => {this.props.navigation.navigate('Home')}}
             title="Logout"
