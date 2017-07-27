@@ -183,7 +183,7 @@ export default class Profile extends Component {
             </View>
             <View style={{flex: 0, flexDirection: 'row', justifyContent: 'flex-end'}}>
               <TouchableOpacity onPress={this.onLogout} style={style.logoutButton}>
-                <Text>Logout</Text>
+                <Text style={{fontFamily: 'SourceSansPro-Regular', color: '#FFFFF2', fontSize: 16}}>Logout</Text>
               </TouchableOpacity>
             </View>
           </View>
