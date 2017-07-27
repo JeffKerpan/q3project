@@ -172,18 +172,21 @@ export default class Profile extends Component {
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', borderColor: 'grey', borderWidth: 1, backgroundColor: '#B9E3C6'}}>
           <Text style={{marginTop: 30, fontFamily: 'SourceSansPro-Regular', fontSize: 25, color: '#FFFFF2'}}>ADD WATER</Text>
         </View>
-        <View style={{flex: 4, alignSelf: 'stretch',width: null}}>
-          <View style = {{flex: 1, flexDirection: 'row', marginTop: 50, justifyContent: "space-around", alignItems: 'center'}}>
-            <View style = {{flex: 1, alignItems: "center", justifyContent:'flex-end'}}>
-              <TouchableOpacity onPress = {this.subWater}>
-                <View style = {{width: 55, height: 55, backgroundColor: "#B9E3C6", alignItems: "center", justifyContent:'center', borderRadius: 100}}>
-                  <Text style = {{color: 'white', fontSize: 40, marginBottom: 5}}>-</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-            <View style ={{flex: 1, alignItems: "center", justifyContent:'center', backgroundColor: "transparent"}}>
-              <Text style={{fontFamily: 'SourceSansPro-Regular', fontSize: 30}}>{this.state.newamount} oz</Text>
-            </View>
+        <View style={{flex: 4, alignSelf: 'stretch',width: null, textAlign: "center"}}>
+          <View style = {{alignItems: "center"}}>
+            <Text style = {{color: "grey", marginTop: 12, backgroundColor: "transparent"}}>Tap the drop to submit</Text>
+          </View>
+            <View style = {{flex: 1, flexDirection: 'row', marginTop: 20, justifyContent: "space-around", alignItems: 'center'}}>
+              <View style = {{flex: 1, alignItems: "center", justifyContent:'flex-end'}}>
+                <TouchableOpacity onPress = {this.subWater}>
+                  <View style = {{width: 55, height: 55, backgroundColor: "#B9E3C6", alignItems: "center", justifyContent:'center', borderRadius: 100}}>
+                    <Text style = {{color: 'white', fontSize: 40, marginBottom: 5}}>-</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+              <View style ={{flex: 1, alignItems: "center", justifyContent:'center', backgroundColor: "transparent"}}>
+                <Text style={{fontFamily: 'SourceSansPro-Regular', fontSize: 30}}>{this.state.newamount} oz</Text>
+              </View>
             <View style = {{flex: 1, alignItems: "center", justifyContent:'flex-start'}}>
               <TouchableOpacity onPress = {this.addWater}>
                 <View style = {{width: 55, height: 55, backgroundColor: "#1FE4AD", alignItems: "center", justifyContent:'center', borderRadius: 100}}>
@@ -210,6 +213,7 @@ export default class Profile extends Component {
               <WaterGlass total = {this.state.recomended} text = {"Advised"} />
             </View>
             <View style={{flex: 0, flexDirection: 'row', justifyContent: 'flex-end'}}>
+            <Text style = {{color: "grey", marginTop: 12, backgroundColor: "transparent"}}>*Do not consume more than 40oz per hour.</Text>
               <TouchableOpacity onPress={this.onLogout} style={style.logoutButton}>
                 <Text style={{fontFamily: 'SourceSansPro-Regular', color: '#FFFFF2', fontSize: 16}}>Logout</Text>
               </TouchableOpacity>
