@@ -12,8 +12,10 @@ export default class Profile extends Component {
       id: 0,
       totalamount: [],
       dailyTotal: 0,
-      total:0,
+      total: 0,
       newamount: 2,
+      yesterTotal: [],
+      yesteramount: 0,
       scale: 1,
       fontLoaded: false,
     }
@@ -22,6 +24,7 @@ export default class Profile extends Component {
     this.addWater = this.addWater.bind(this);
     this.subWater = this.subWater.bind(this);
     this.totalWater = this.totalWater.bind(this);
+    this.yesterWater = this.yesterWater.bind(this);
     this.scale = this.scale.bind(this);
     this.onLogout = this.onLogout.bind(this);
   }
@@ -45,6 +48,7 @@ export default class Profile extends Component {
       totalamount: jsonResponse
     }, () => {
       this.totalWater(this.state.totalamount)
+      this.yesterWater(this.state.totalamount)
     });
   }
 
@@ -78,7 +82,6 @@ export default class Profile extends Component {
     } catch (error) {
       console.log(error);
     }
-
   }
 
   totalWater (array) {
@@ -97,6 +100,24 @@ export default class Profile extends Component {
       total += parseInt(element);
     })
     this.setState({dailyTotal: total});
+  }
+
+  yesterWater (array) {
+    let today = new Date;
+    let dailyTotal = [];
+    let total = 0;
+    array.forEach((element) => {
+      let timeIndex = element.created_at.indexOf('T');
+      let firstDate = element.created_at.substring(timeIndex - 2, timeIndex);
+      let secondDate = today.getUTCDate();
+      if (parseInt(firstDate) === secondDate - 1) {
+        dailyTotal.push(element.amount);
+      }
+    })
+    dailyTotal.forEach((element) => {
+      total += parseInt(element);
+    })
+    this.setState({yesteramount: total});
   }
 
   addWater () {
@@ -175,7 +196,8 @@ export default class Profile extends Component {
         </View>
         <Image source={require('../styles/resources/drink-water-bg2.png')} style={{flex: 1, alignSelf: 'stretch',width: null}}>
           <View style = {{flex: 1, alignItems: "center", justifyContent: "space-around"}}>
-            <WaterGlass total = {this.state.dailyTotal} />
+            <WaterGlass total = {this.state.dailyTotal} yesterTotal = {this.state.yesteramount} />
+            <Text>{this.state.yesteramount}</Text>
             <Button
             onPress= {this.onLogout}
             title="Logout"
