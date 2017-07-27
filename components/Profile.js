@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextInput, ScrollView, AppRegistry, Button, StyleSheet, Text, View, TouchableHighlight, Image, NativeModules, Animated, Easing, AsyncStorage } from 'react-native';
+import { TextInput, ScrollView, AppRegistry, Button, StyleSheet, Text, View, TouchableOpacity, TouchableHighlight, Image, NativeModules, Animated, Easing, AsyncStorage } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import style from '../styles/stylecomp.js';
 import WaterGlass from './WaterGlass.js';
@@ -64,9 +64,9 @@ export default class Profile extends Component {
     Animated.timing(
       this.scaleValue,
       {
-        toValue: Math.sqrt(this.state.newamount - this.state.newamount/1.2),
+        toValue: Math.sqrt(this.state.newamount - this.state.newamount/1.1),
         duration: 300,
-        easing: Easing.bounce
+        easing: Easing.elastic(3)
       }
     ).start()
   }
@@ -143,43 +143,49 @@ export default class Profile extends Component {
   render() {
     return (
       <View style = {{flex: 1}}>
-        <View style={{flex: 1, alignSelf: 'stretch',width: null}}>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', borderColor: 'grey', borderWidth: 1, backgroundColor: '#B9E3C6'}}>
+          <Text style={{marginTop: 30, fontFamily: 'SourceSansPro-Regular', fontSize: 25, color: '#FFFFF2'}}>ADD WATER</Text>
+        </View>
+        <View style={{flex: 4, alignSelf: 'stretch',width: null}}>
           <View style = {{flex: 1, flexDirection: 'row', marginTop: 50, justifyContent: "space-around", alignItems: 'center'}}>
             <View style = {{flex: 1, alignItems: "center", justifyContent:'flex-end'}}>
-              <TouchableHighlight onPress = {this.subWater}>
+              <TouchableOpacity onPress = {this.subWater}>
                 <View style = {{width: 55, height: 55, backgroundColor: "#B9E3C6", alignItems: "center", justifyContent:'center', borderRadius: 100}}>
                   <Text style = {{color: 'white', fontSize: 40, marginBottom: 5}}>-</Text>
                 </View>
-              </TouchableHighlight>
+              </TouchableOpacity>
             </View>
             <View style ={{flex: 1, alignItems: "center", justifyContent:'center', backgroundColor: "transparent"}}>
               <Text style={{fontFamily: 'SourceSansPro-Regular', fontSize: 30}}>{this.state.newamount} oz</Text>
             </View>
             <View style = {{flex: 1, alignItems: "center", justifyContent:'flex-start'}}>
-              <TouchableHighlight onPress = {this.addWater}>
+              <TouchableOpacity onPress = {this.addWater}>
                 <View style = {{width: 55, height: 55, backgroundColor: "#1FE4AD", alignItems: "center", justifyContent:'center', borderRadius: 100}}>
                   <Text style = {{color: 'white', fontSize: 30, marginBottom: 5}}>+</Text>
                 </View>
-              </TouchableHighlight>
+              </TouchableOpacity>
             </View>
           </View>
           <View style = {{flex: 3, flexDirection: "row", justifyContent: "center", alignItems: 'center'}}>
             <View style = {{flex: 3, justifyContent: "flex-start", alignItems: "center", overflow: 'visible' }}>
               <Animated.View style = {{transform:[{scale: this.scaleValue}]}}>
-                <TouchableHighlight onPress = {this.onSubmit} style={{overflow: 'visible',flex: 1, alignItems: "center", justifyContent:'center'}}>
+                <TouchableOpacity onPress = {this.onSubmit} style={{overflow: 'visible',flex: 1, alignItems: "center", justifyContent:'center'}}>
                   <Image source = {require ("../styles/resources/DRINKWATERlogoSmall.png")} style={ {margin:1}} />
-                </TouchableHighlight>
+                </TouchableOpacity>
               </Animated.View>
             </View>
           </View>
         </View>
-        <Image source={require('../styles/resources/drink-water-bg2.png')} style={{flex: 1, alignSelf: 'stretch',width: null}}>
-          <View style = {{flex: 1, alignItems: "center", justifyContent: "space-around"}}>
-            <WaterGlass total = {this.state.dailyTotal} />
-            <Button
-            onPress= {this.onLogout}
-            title="Logout"
-            color="#841584" />
+        <Image source={require('../styles/resources/drink-water-bg2.png')} style={{flex: 4, alignSelf: 'stretch',width: null}}>
+          <View style = {{flex: 1, justifyContent: "space-between"}}>
+            <View style={{marginTop: 30, flex: 0, flexDirection: 'row', justifyContent: 'center'}}>
+              <WaterGlass total = {this.state.dailyTotal} />
+            </View>
+            <View style={{flex: 0, flexDirection: 'row', justifyContent: 'flex-end'}}>
+              <TouchableOpacity onPress={this.onLogout} style={style.logoutButton}>
+                <Text>Logout</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </Image>
       </View>
