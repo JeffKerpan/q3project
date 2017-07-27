@@ -76,7 +76,7 @@ export default class SignUp extends Component {
     return (
       <ScrollView style={{flex: 1}} ref="scrollView">
         <Image source={require('../styles/resources/drink-water-bg2.png')} style={style.backGround}>
-            <Text>Sign Up Page</Text>
+            <Text style = {{backgroundColor: "transparent"}}>Sign Up Page</Text>
             <TextInput ref="myInput"
             onFocus={this.scrolldown} value={this.state.firstname} style={style.form} onChangeText={(value) => this.setState({firstname: value})} placeholder="firstname" />
             <TextInput value={this.state.lastname} style={style.form}
