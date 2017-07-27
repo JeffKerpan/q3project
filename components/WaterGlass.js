@@ -26,11 +26,12 @@ export default class WaterGlass extends React.Component {
   render () {
     return (
       <View>
-        <View style = {{flex: 0, width: 60, height: 120, borderWidth: 3, borderColor: "gray", justifyContent: "flex-end"}}>
-        <Text style = {{backgroundColor: "transparent"}}>{this.props.total}</Text>
-        <Text style = {{backgroundColor: "transparent"}}>{this.props.yesteramount}</Text>
+        <View style = {{flex: 0, width: 60, height: 120, borderWidth: 3, borderTopWidth: 0, borderBottomWidth: 5, borderColor: "gray", justifyContent: "flex-end"}}>
           <View style = {{width: 54, height: 60, backgroundColor: "rgba(150, 190, 255, .7)"}}>
           </View>
+        </View>
+        <View style={{flex: 0, alignItems: 'center'}}>
+          <Text style = {{backgroundColor: "transparent", fontFamily: 'SourceSansPro-Regular', fontSize: 17}}>{this.props.total} oz</Text>
         </View>
       </View>
     )

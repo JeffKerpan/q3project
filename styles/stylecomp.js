@@ -37,6 +37,17 @@ export default StyleSheet.create({
     borderRadius: 5,
     marginBottom: 4,
     marginLeft: 4
+  },
+  logoutButton:{
+    height:40,
+    width: 70,
+    backgroundColor: '#1FE4AD',
+    borderColor: 'grey',
+    borderWidth: 1,
+    borderRadius: 5,
+    flex: 0,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 
 })
