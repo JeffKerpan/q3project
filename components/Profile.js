@@ -10,6 +10,7 @@ export default class Profile extends Component {
     super();
     this.state = {
       id: 0,
+      recomended: 100,
       totalamount: [],
       dailyTotal: 0,
       total: 0,
@@ -160,6 +161,10 @@ export default class Profile extends Component {
     });
   }
 
+  calcWeight(num) {
+    return num/1.7
+  }
+
 
   render() {
     return (
@@ -199,8 +204,10 @@ export default class Profile extends Component {
         </View>
         <Image source={require('../styles/resources/drink-water-bg2.png')} style={{flex: 4, alignSelf: 'stretch',width: null}}>
           <View style = {{flex: 1, justifyContent: "space-between"}}>
-            <View style={{marginTop: 30, flex: 0, flexDirection: 'row', justifyContent: 'center'}}>
-              <WaterGlass total = {this.state.dailyTotal} />
+            <View style={{marginTop: 30, flex: 0, flexDirection: 'row', justifyContent: 'space-around'}}>
+              <WaterGlass total = {this.state.yesteramount} text = {"Yesterday"} />
+              <WaterGlass total = {this.state.dailyTotal} text = {"Today"} />
+              <WaterGlass total = {this.state.recomended} text = {"Advised"} />
             </View>
             <View style={{flex: 0, flexDirection: 'row', justifyContent: 'flex-end'}}>
               <TouchableOpacity onPress={this.onLogout} style={style.logoutButton}>
