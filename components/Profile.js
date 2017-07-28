@@ -172,7 +172,7 @@ export default class Profile extends Component {
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', borderColor: 'grey', borderWidth: 1, backgroundColor: '#B9E3C6'}}>
           <Text style={{marginTop: 30, fontFamily: 'SourceSansPro-Regular', fontSize: 25, color: '#FFFFF2'}}>ADD WATER</Text>
         </View>
-        <View style={{flex: 4, alignSelf: 'stretch',width: null, textAlign: "center"}}>
+        <View style={{flex: 4, alignSelf: 'stretch',width: null}}>
           <View style = {{alignItems: "center"}}>
             <Text style = {{color: "grey", marginTop: 12, backgroundColor: "transparent"}}>Tap the drop to submit</Text>
           </View>
