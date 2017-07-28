@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Image, TouchableHighlight, ScrollView, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Image, TouchableHighlight, ScrollView, AsyncStorage, Animated, Easing } from 'react-native';
 import style from '../styles/stylecomp.js';
 import { StackNavigator } from 'react-navigation';
 import { Font } from 'expo';
@@ -16,7 +16,9 @@ export default class HomePage extends React.Component {
       password: "",
       fontLoaded: false,
     }
+    this.opacityValue = new Animated.Value(0)
     this.onSubmit = this.onSubmit.bind(this);
+    this.fadeIn = this.fadeIn.bind(this);
   }
 
   async componentDidMount() {
@@ -29,6 +31,7 @@ export default class HomePage extends React.Component {
       'SourceSansPro-Regular': require('../Assets/Fonts/SourceSansPro-Regular.ttf')
     });
     this.setState({ fontLoaded: true }, async ()=>{
+      this.fadeIn()
       try {
         const value = await AsyncStorage.getItem('@UserId:key');
         if (value !== null){
@@ -42,9 +45,19 @@ export default class HomePage extends React.Component {
     })
   }
 
+  fadeIn () {
+    Animated.timing(
+      this.opacityValue,
+      {
+        toValue: 1,
+        duration: 3000,
+        easing: Easing.elastic(1)
+      }
+    ).start()
+  }
+
 
   async onSubmit(){
-    console.log(this.state);
     let response = await fetch('https://drink-water-api.herokuapp.com/users/login', {
       method: 'POST',
       headers: {
@@ -56,7 +69,6 @@ export default class HomePage extends React.Component {
         password: this.state.password
       }),
     })
-    console.log(response);
     let jsonResponse = await response.json()
     this.setState({id:jsonResponse[0].id}, async ()=>{
       let userId = this.state.id.toString()
@@ -75,7 +87,13 @@ export default class HomePage extends React.Component {
       {
       this.state.fontLoaded ? (
         <View style={style.container}>
-          <Image source={require('../styles/resources/DRINKWATERlogo.png')} style={{marginBottom: 30}}></Image>
+          <Animated.View style={{width: 500, alignItems: 'center',
+            justifyContent: 'center', opacity: this.opacityValue, transform:[{scale: this.opacityValue}] }}>
+            <Image source={require('../styles/resources/DRINKWATERlogo.png')} style={{marginBottom: 30}}></Image>
+            <View style = {{backgroundColor: "transparent", position: 'absolute', top: 50}}>
+              <Text style={{color: 'white' , fontFamily: 'Oswald-SemiBold', fontSize: 45, marginTop: 5 }}>DRINK WATER</Text>
+            </View>
+          </Animated.View>
           <View style={style.splashRow}>
             <View>
               <TextInput value={this.state.email} style={style.form} onChangeText={(value) => this.setState({email: value.trim()})} placeholder="Email" />
@@ -95,9 +113,7 @@ export default class HomePage extends React.Component {
               </TouchableHighlight>
             </View>
           </View>
-          <View style = {{backgroundColor: "transparent"}}>
-            <Text style={{color: 'white' , fontFamily: 'Oswald-SemiBold', fontSize: 45, marginTop: 5 }}>DRINK WATER</Text>
-          </View>
+
         </View>
         ): null
         }
